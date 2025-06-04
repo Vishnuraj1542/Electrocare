@@ -1,6 +1,8 @@
 from django.urls import path
 from .views import *
 
+app_name='log_manager'
+
 urlpatterns=[
     path('admin/', admin_page,name='admin_page'),
     path('public/',public_page,name='public_page'),

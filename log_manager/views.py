@@ -30,13 +30,18 @@ class Login(View):
         if not LoginDetails.objects.filter(username=username).exists():
             messages.error(request,'user not found')
             return render(request,'login/login.html')
-        details=authenticate(request,username=username,password=password)
-        if details:
-            user_type=request.user.user_type
-            redirect(landing_url.get(user_type,'defaultPage'))
+        user=authenticate(request,username=username,password=password)
+        if user is None:
+            print('user is none')
+            messages.error(request,'invalid username or password')
+            return render(request,'login/login.html')
+        login(request,user)
+        print(request.user)
+        user_type=request.user.user_type
+        if user_type in landing_url:
             messages.success(request,'logged in sucessfully')
-        messages.error(request,'login failed')
-        return render(request,'login/login.html')
+            return redirect(landing_url.get(user_type))
+        return render(request,'login/login.html',{'user':user})
             
 
             

@@ -9,3 +9,6 @@ class OfficeDetails(models.Model):
     district=models.CharField(null=True,blank=True,max_length=80)
     local_body=models.CharField(null=True,blank=True,max_length=70)
     user_details=models.ForeignKey(LoginDetails,on_delete=models.CASCADE,null=True,blank=True)
+    
+    def __str__(self):
+        return self.office_name
